@@ -32,7 +32,7 @@ func (s *Server) HandlerSend(w http.ResponseWriter, r *http.Request) {
 	// get UTXOs
 	utxos, err := getUTXOs(sendR.Address)
 	if err != nil {
-		log.Println("HandlerSend(): ", err.Error())
+		log.Println("HandlerSend -> getUTXOs(): ", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

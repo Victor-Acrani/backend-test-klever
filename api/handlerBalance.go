@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"math/big"
 	"net/http"
 
@@ -12,7 +13,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func (s *Server) HanlderBalance(w http.ResponseWriter, r *http.Request) {
+func (s *Server) HandlerBalance(w http.ResponseWriter, r *http.Request) {
 	// get address
 	vars := mux.Vars(r)
 	address := vars["address"]
@@ -20,6 +21,7 @@ func (s *Server) HanlderBalance(w http.ResponseWriter, r *http.Request) {
 	// check address
 	isValid := outils.IsValidBitcoinAddress(address)
 	if !isValid {
+		log.Println("HandlerBalance(): invalid address")
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, `{"message": "invalid address"}`)
@@ -29,6 +31,7 @@ func (s *Server) HanlderBalance(w http.ResponseWriter, r *http.Request) {
 	// get balance
 	balance, err := getBalance(address)
 	if err != nil {
+		log.Println("HandlerBalance -> getBalance(): ", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -36,6 +39,7 @@ func (s *Server) HanlderBalance(w http.ResponseWriter, r *http.Request) {
 	// convert binary data
 	jsonResponse, err := json.Marshal(balance)
 	if err != nil {
+		log.Println("HandlerBalance(): ", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

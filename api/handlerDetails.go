@@ -30,7 +30,7 @@ func (s *Server) HandlerDetails(w http.ResponseWriter, r *http.Request) {
 	// get details
 	details, err := getBitcoinAddressDetails(address)
 	if err != nil {
-		log.Println("HandlerDetails(): ", err.Error())
+		log.Println("HandlerDetails -> getBitcoinAddressDetails(): ", err.Error())
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusInternalServerError)
 		io.WriteString(w, `{"message": "internal server error"}`)
