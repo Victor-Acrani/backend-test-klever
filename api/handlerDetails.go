@@ -20,6 +20,7 @@ func (s *Server) HandlerDetails(w http.ResponseWriter, r *http.Request) {
 	// check address
 	isValid := outils.IsValidBitcoinAddress(address)
 	if !isValid {
+		log.Println("HandlerDetails(): invalid address")
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, `{"message": "invalid address"}`)
@@ -29,10 +30,10 @@ func (s *Server) HandlerDetails(w http.ResponseWriter, r *http.Request) {
 	// get details
 	details, err := getBitcoinAddressDetails(address)
 	if err != nil {
+		log.Println("HandlerDetails(): ", err.Error())
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusInternalServerError)
 		io.WriteString(w, `{"message": "internal server error"}`)
-		log.Println(err.Error())
 		return
 	}
 
@@ -40,6 +41,7 @@ func (s *Server) HandlerDetails(w http.ResponseWriter, r *http.Request) {
 	dataAddress := toAddressData(details)
 	jsonData, err := json.Marshal(&dataAddress)
 	if err != nil {
+		log.Println("HandlerDetails(): ", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -85,12 +87,9 @@ func getBitcoinAddressDetails(address string) (*types.DetailsDTO, error) {
 
 // toAddressData returns AddressData from a DetailsDTO.
 func toAddressData(details *types.DetailsDTO) types.AddressData {
-	// calculate balance
-	balance := outils.BigIntSubtraction(details.TotalReceived, details.TotalSent)
-
 	return types.AddressData{
 		Address:     details.Address,
-		Balance:     balance,
+		Balance:     details.Balance,
 		TotalTx:     details.TotalTx,
 		BalanceInfo: types.BalanceInfo{Confirmed: details.Balance, Unconfirmed: details.BalanceUnconfirmed},
 		Total:       types.TotalInfo{Sent: details.TotalSent, Received: details.TotalReceived},
