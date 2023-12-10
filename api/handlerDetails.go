@@ -60,6 +60,9 @@ func getBitcoinAddressDetails(address string) (*types.DetailsDTO, error) {
 	// set url
 	url := fmt.Sprintf("https://bitcoin.explorer.klever.io/api/v2/address/%s", address)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return &types.DetailsDTO{}, err
+	}
 	req.SetBasicAuth("support", "Fg+GJKDACKIEOD3XVps=")
 
 	// do request

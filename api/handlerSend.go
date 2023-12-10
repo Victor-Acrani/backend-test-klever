@@ -94,6 +94,9 @@ func getUTXOs(address string) ([]types.UTXO, error) {
 	// set url
 	url := fmt.Sprintf("https://bitcoin.explorer.klever.io/api/v2/utxo/%s", address)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
 	req.SetBasicAuth("support", "Fg+GJKDACKIEOD3XVps=")
 
 	// do request
