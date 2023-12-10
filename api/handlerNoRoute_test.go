@@ -16,7 +16,7 @@ func TestHandlerNoRoute(t *testing.T) {
 	}
 	defer server.Shutdown(context.Background())
 
-	req, err := http.NewRequest("GET", "/api/v2/wrongroute", nil)
+	req, err := http.NewRequest(http.MethodGet, "/api/v2/wrongroute", nil)
 	if err != nil {
 		t.Fatalf("error to create request: %v", err)
 	}

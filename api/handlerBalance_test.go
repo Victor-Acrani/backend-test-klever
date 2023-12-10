@@ -21,10 +21,10 @@ func TestHandlerBalance(t *testing.T) {
 
 		// create router
 		router := mux.NewRouter()
-		router.HandleFunc("/api/v2/balance/{address}", server.HandlerDetails).Methods("GET")
+		router.HandleFunc("/api/v2/balance/{address}", server.HandlerDetails).Methods(http.MethodGet)
 
 		// create request
-		req := httptest.NewRequest("GET", "/api/v2/balance/bc1qyzxdu4px4jy8gwhcj82zpv7qzhvc0fvumgnh0r", nil)
+		req := httptest.NewRequest(http.MethodGet, "/api/v2/balance/bc1qyzxdu4px4jy8gwhcj82zpv7qzhvc0fvumgnh0r", nil)
 		rr := httptest.NewRecorder()
 
 		// run http request
@@ -47,10 +47,10 @@ func TestHandlerBalance(t *testing.T) {
 
 		// create router
 		router := mux.NewRouter()
-		router.HandleFunc("/api/v2/balance/{address}", server.HandlerDetails).Methods("GET")
+		router.HandleFunc("/api/v2/balance/{address}", server.HandlerDetails).Methods(http.MethodGet)
 
 		// create request
-		req := httptest.NewRequest("GET", "/api/v2/balance/bc1qyzxdu4px4jy8gwhcj82zpv7qzhvc0fvumgnh", nil)
+		req := httptest.NewRequest(http.MethodGet, "/api/v2/balance/bc1qyzxdu4px4jy8gwhcj82zpv7qzhvc0fvumgnh", nil)
 		rr := httptest.NewRecorder()
 
 		// run http request

@@ -16,7 +16,7 @@ func TestHandlerHealthCheck(t *testing.T) {
 	}
 	defer server.Shutdown(context.Background())
 
-	req, err := http.NewRequest("GET", "/api/v2", nil)
+	req, err := http.NewRequest(http.MethodGet, "/api/v2", nil)
 	if err != nil {
 		t.Fatalf("error to create request: %v", err)
 	}
