@@ -48,6 +48,7 @@ func (s *Server) Start() error {
 	apiV2Router.HandleFunc("/details/{address}", s.HandlerDetails).Methods(http.MethodGet)
 	apiV2Router.HandleFunc("/balance/{address}", s.HandlerBalance).Methods(http.MethodGet)
 	apiV2Router.HandleFunc("/send", s.HandlerSend).Methods(http.MethodPost)
+	apiV2Router.HandleFunc("/tx/{tx}", s.HandlerTransaction).Methods(http.MethodGet)
 
 	// define no route
 	r.PathPrefix("/").HandlerFunc(s.HandlerNoRoute)
