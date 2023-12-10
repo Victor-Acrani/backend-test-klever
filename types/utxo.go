@@ -1,5 +1,6 @@
 package types
 
+// UTXO gives a struct for unspent transaction data.
 type UTXO struct {
 	Confirmed     bool   `json:"confirmed"`     // Indicates whether this transaction has been confirmed on the blockchain.
 	TxID          string `json:"txid"`          // unique identifier of the transaction on the blockchain.

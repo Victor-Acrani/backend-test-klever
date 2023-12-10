@@ -7,6 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// SendRequestDTO gives a struct for HandlerSend request body.
 type SendRequestDTO struct {
 	Address string `json:"address" validate:"required"`
 	Amount  string `json:"amount" validate:"numeric,required"`
